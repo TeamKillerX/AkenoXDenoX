@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard } from "grammy";
+import { Bot, InlineKeyboard, GrammyError, HttpError } from "grammy";
 import { autoRetry } from "@grammyjs/auto-retry";
 import { BOT_TOKEN, CHAT_IDS } from "../config.ts";
 import { ChatGptResponse } from "./chatgpt.ts";
@@ -14,12 +14,18 @@ import {
    AdminMuteUser,
   } from "./admins.ts";
 
+
 const bot = new Bot(BOT_TOKEN);
 
 bot.api.config.use(autoRetry({
   maxRetryAttempts: 10,
   maxDelaySeconds: 3,
 }));
+
+bot.api.config.use((prev, method, payload) => {
+  console.log("Grammy Debug:", method, payload);
+  return prev(method, payload);
+});
 
 bot.command("start", async (ctx) => {
   const reply_markup = ButtonUrl("Developer", "https://t.me/xpushz");
@@ -42,8 +48,8 @@ bot.command("check", async (ctx) => {
 
 // custom command
 bot.command("ask", ChatGptResponse);
-
 // admin
+
 bot.command("ban", AdminBannedUser);
 bot.command("kick", AdminKIckUser);
 bot.command("unban", AdminUnbanndUser);
@@ -111,7 +117,13 @@ bot.callbackQuery(/^unmute:(\d+)$/, async (ctx) => {
 });
 
 bot.catch((err) => {
-  console.error("Error:", err);
+  console.error("Grammy Error:", err);
+  if (err instanceof GrammyError) {
+    console.error("Grammy API Error:", err.description);
+  } else if (err instanceof HttpError) {
+    console.error("HTTP Error:", err);
+  } else {
+    console.error("Unknown Error:", err);
+  }
 });
-
 export { bot };
