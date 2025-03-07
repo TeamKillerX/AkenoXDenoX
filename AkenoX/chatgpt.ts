@@ -26,7 +26,7 @@ import { CHAT_IDS } from "../config.ts";
 export async function ChatGptResponse(ctx:any): Promise<void> {
     if (ctx.message && ctx.message.text) {
         const prompt = ctx.message.text.replace("/ask", "").trim();
-        
+
         if (await ChatType("private", ctx)) return;
 
         if (!CHAT_IDS.includes(ctx.chat?.id)) {
@@ -36,13 +36,13 @@ export async function ChatGptResponse(ctx:any): Promise<void> {
           await ctx.leaveChat();
           return;
         }
-    
+
         if (prompt) {
           try {
             const response = await akenox_gpt(prompt, ctx);
             const responseText = response.results
               .replace(/[_*[\]()~`>#+-=|{}.!]/g, "\\$&");
-        
+
             await ctx.reply(responseText,{
               reply_to_message_id: ctx.message?.message_id,
               parse_mode: "MarkdownV2"
@@ -64,4 +64,4 @@ export async function ChatGptResponse(ctx:any): Promise<void> {
         });
     }
 };
-  
+
