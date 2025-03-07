@@ -2,7 +2,7 @@ import { Bot, InlineKeyboard } from "grammy";
 import { autoRetry } from "@grammyjs/auto-retry";
 import { BOT_TOKEN, CHAT_IDS } from "../config.ts";
 import { ChatGptResponse } from "./chatgpt.ts";
-import { ButtonUrl } from "./helper/helper_button.ts"; 
+import { ButtonUrl } from "./helper/helper_button.ts";
 import { DbStartInBot } from "./database/database.ts";
 import { get_me } from "./helper/helper_updates.ts";
 
