@@ -27,3 +27,13 @@ export async function ChatType(type_chat: string, ctx: any): Promise<boolean> {
   }
   return false;
 }
+
+export async function verifyUser(ctx: any, userId: number) {
+  try {
+      const user = await ctx.api.getChat(userId);
+      return user;
+  } catch (error) {
+      console.error("Error verifying user:", error);
+      return null;
+  }
+}
