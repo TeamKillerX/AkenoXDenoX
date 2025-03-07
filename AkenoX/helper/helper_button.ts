@@ -24,3 +24,8 @@ import { Bot, InlineKeyboard } from "grammy";
 export function ButtonUrl(text: string, url: string): InlineKeyboard {
     return new InlineKeyboard().url(text, url);
 }
+
+export function ButtonText(inline_text: string, text: string): InlineKeyboard {
+    return new InlineKeyboard().text(inline_text, text);
+}
+
