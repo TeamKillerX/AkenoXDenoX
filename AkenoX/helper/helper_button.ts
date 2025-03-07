@@ -28,4 +28,3 @@ export function ButtonUrl(text: string, url: string): InlineKeyboard {
 export function ButtonText(inline_text: string, text: string): InlineKeyboard {
     return new InlineKeyboard().text(inline_text, text);
 }
-

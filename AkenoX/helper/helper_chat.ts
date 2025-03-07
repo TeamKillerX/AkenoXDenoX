@@ -37,4 +37,3 @@ export async function verifyUser(ctx: any, userId: number) {
       return null;
   }
 }
-
